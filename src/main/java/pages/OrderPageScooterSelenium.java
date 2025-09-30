@@ -1,5 +1,4 @@
-
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,28 +11,27 @@ import java.time.format.DateTimeFormatter;
 
 public class OrderPageScooterSelenium {
 
-    private WebDriver driver;
+    private final WebDriver driver;
     private final String ORDER_PAGE_URL = "/order";
-    private final By nameField = By.xpath(".//input[@placeholder='* Имя']"); // Локатор "Имя"
-    private final By surnameField = By.xpath(".//input[@placeholder='* Фамилия']"); //Локатор "Фамилия"
-    private final By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");  //Локатор "Адрес"
-    private final By metroStationField = By.xpath(".//input[@placeholder='* Станция метро']"); //Локатор выбора "Станции метро"
-    private final By phoneNumberField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");  //Локатор "Телефон"
-    private final By nextButtonOrderPage = By.xpath(".//button[text()='Далее']"); //Кнопка "Далее"
-    private final By deliveryDateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']"); //Локатор "Когда привезти самокат"
-    private final By rentalDaysField = By.xpath(".//div[@class='Dropdown-root']"); //Локатор Выпадающий список "Срок аренды".
-    private final By colorOfScooterGreyCheckbox = By.id("grey"); //локатор для серого цвета
-    private final By colorOfScooterBlackCheckbox = By.id("black"); //локатор для черного цвета
-    private final By commentForСourierField = By.xpath(".//input[@placeholder='Комментарий для курьера']");//Локатор "Комментарий для курьера".
-    private final By makeOrderMiddleButton = By.xpath(".//button[contains(@class, 'Button_Middle') and text()='Заказать']"); //Локатор кнопки "Заказать"
-    private final By confirmOrderWindowYesButton = By.xpath(".//button[text()='Да']"); //локатор кнопки "Да" в окне подтверждения заказа.
-    private final By orderHasBeenPlaced = By.xpath(".//div[text()='Заказ оформлен']"); //Сообщение об успешном оформлении заказа.
+    private final By nameField = By.xpath(".//input[@placeholder='* Имя']");
+    private final By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
+    private final By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
+    private final By metroStationField = By.xpath(".//input[@placeholder='* Станция метро']");
+    private final By phoneNumberField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private final By nextButtonOrderPage = By.xpath(".//button[text()='Далее']");
+    private final By deliveryDateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
+    private final By rentalDaysField = By.xpath(".//div[@class='Dropdown-root']");
+    private final By colorOfScooterGreyCheckbox = By.id("grey");
+    private final By colorOfScooterBlackCheckbox = By.id("black");
+    private final By commentForСourierField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
+    private final By makeOrderMiddleButton = By.xpath(".//button[contains(@class, 'Button_Middle') and text()='Заказать']");
+    private final By confirmOrderWindowYesButton = By.xpath(".//button[text()='Да']");
+    private final By orderHasBeenPlaced = By.xpath(".//div[text()='Заказ оформлен']");
 
 
     public OrderPageScooterSelenium(WebDriver driver) {
         this.driver = driver;
     }
-
 
     public OrderPageScooterSelenium open(String baseUrl) {
         driver.get(baseUrl + ORDER_PAGE_URL);
@@ -80,7 +78,6 @@ public class OrderPageScooterSelenium {
 
     public OrderPageScooterSelenium selectDeliveryDate(int daysAfterToday) {
         driver.findElement(deliveryDateField).click();
-
         LocalDate futureDate = LocalDate.now().plusDays(daysAfterToday);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d");
         String day = futureDate.format(formatter);
@@ -110,16 +107,14 @@ public class OrderPageScooterSelenium {
     }
 
     public OrderPageScooterSelenium clickConfirmOrderWindowYesButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(confirmOrderWindowYesButton)); // Явное ожидание
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(confirmOrderWindowYesButton));
         driver.findElement(confirmOrderWindowYesButton).click();
         return this;
     }
 
     public boolean isOrderPlaced() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(orderHasBeenPlaced));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(orderHasBeenPlaced));
         return driver.findElement(orderHasBeenPlaced).isDisplayed();
     }
-
-
 }

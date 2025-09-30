@@ -1,5 +1,5 @@
-import Pages.MainPageScooter;
-import Pages.OrderPageScooterSelenium;
+import pages.MainPageScooter;
+import pages.OrderPageScooterSelenium;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -51,11 +51,15 @@ public class PositiveScenarioTest extends BaseTest {
 
     @Test
     public void shouldMakeOrder() {
-        MainPageScooter mainPage = new MainPageScooter(driver); // Создаем экземпляр класса MainPageScooter
-        OrderPageScooterSelenium orderPageScooterSelenium = new OrderPageScooterSelenium(driver);
+
+        MainPageScooter mainPage = new MainPageScooter(driver);
         mainPage.open();
-        orderPageScooterSelenium
-                .fillNameField(name)
+
+
+        OrderPageScooterSelenium orderPage = new OrderPageScooterSelenium(driver);
+
+
+        orderPage.fillNameField(name)
                 .fillSurnameField(surname)
                 .fillAddressField(address)
                 .selectMetroStation(metroStation)
@@ -68,10 +72,7 @@ public class PositiveScenarioTest extends BaseTest {
                 .clickMakeOrderMiddleButton()
                 .clickConfirmOrderWindowYesButton();
 
-        assertTrue(
-                "Сообщение об успешном оформлении заказа не появилось.",
-                orderPageScooterSelenium.isOrderPlaced()
-        );
+
+        assertTrue("Сообщение об успешном оформлении заказа не появилось.", orderPage.isOrderPlaced());
     }
 }
-

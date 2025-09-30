@@ -1,4 +1,4 @@
-import Pages.MainPageScooter;
+import pages.MainPageScooter;
 import org.junit.After;
 import org.junit.Test;
 
