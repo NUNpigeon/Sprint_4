@@ -1,8 +1,13 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPageScooter;
 import pages.OrderPageScooterSelenium;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
@@ -55,8 +60,12 @@ public class PositiveScenarioTest extends BaseTest {
         MainPageScooter mainPage = new MainPageScooter(driver);
         mainPage.open();
 
+        mainPage.clickHeaderOrderButton();
+
 
         OrderPageScooterSelenium orderPage = new OrderPageScooterSelenium(driver);
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//input[@placeholder='* Имя']")));
 
 
         orderPage.fillNameField(name)
