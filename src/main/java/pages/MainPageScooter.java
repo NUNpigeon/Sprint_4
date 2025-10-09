@@ -29,15 +29,10 @@ public class MainPageScooter {
     }
 
 
-
     public String getTextOfExpandedAnswer() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement expandedAnswer = wait.until(ExpectedConditions.visibilityOfElementLocated(expandedAnswerLocator));
         return expandedAnswer.getText();
-    }
-
-    class PageConstants {
-        public static final String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru";
     }
 
 }

@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -50,7 +51,7 @@ public class PositiveScenarioTest extends BaseTest {
     public static Object[][] getData() {
         return new Object[][]{
                 {"Екатерина", "Гордон", "ул. Пятницкое шоссе, д.42", "Фрунзенская", "89070520562", 10, "двое суток", "grey", "Оставить у двери"},
-                {"Мария", "Хворова", "ул. Парковая, д.10", "Академическая", "+796356655", 5, "пятеро суток", "black", "Позвонить в домофон"},
+                {"Мария", "Хворова", "ул. Парковая, д.10", "Академическая", "+79635665520", 5, "пятеро суток", "black", "Позвонить в домофон"},
         };
     }
 
@@ -83,5 +84,10 @@ public class PositiveScenarioTest extends BaseTest {
 
 
         assertTrue("Сообщение об успешном оформлении заказа не появилось.", orderPage.isOrderPlaced());
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
     }
 }

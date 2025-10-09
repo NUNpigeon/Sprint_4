@@ -1,6 +1,7 @@
 import pages.MainPageScooter;
 import org.junit.After;
 import org.junit.Test;
+import pages.PageConstants;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,8 +16,7 @@ public class OrderButtonTest extends BaseTest {
         mainPage.open();
         mainPage.clickHeaderOrderButton();
 
-        assertTrue(driver.getCurrentUrl().contains("order"));
-
+        assertTrue(driver.getCurrentUrl().contains(PageConstants.ORDER_PAGE_URL));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class OrderButtonTest extends BaseTest {
         mainPage = new MainPageScooter(driver);
         mainPage.open();
         mainPage.clickHeaderOrderButton();
-        assertTrue(driver.getCurrentUrl().contains("order"));
+        assertTrue(driver.getCurrentUrl().contains(PageConstants.ORDER_PAGE_URL));
 
     }
 

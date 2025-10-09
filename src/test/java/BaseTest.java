@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.PageConstants;
 
 // Базовый класс для тестов
 public class BaseTest {
@@ -17,8 +18,8 @@ public class BaseTest {
 
         driver = new ChromeDriver();
 
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(PageConstants.MAIN_PAGE_URL);
     }
 
 
-    }
+}

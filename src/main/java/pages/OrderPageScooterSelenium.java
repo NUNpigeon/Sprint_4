@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 public class OrderPageScooterSelenium {
 
     private final WebDriver driver;
-    private final String ORDER_PAGE_URL = "/order";
     private final By nameField = By.xpath(".//input[@placeholder='* Имя']");
     private final By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
     private final By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
@@ -34,7 +33,7 @@ public class OrderPageScooterSelenium {
     }
 
     public OrderPageScooterSelenium open(String baseUrl) {
-        driver.get(baseUrl + ORDER_PAGE_URL);
+        driver.get(baseUrl + PageConstants.ORDER_PAGE_URL);
         return this;
     }
 
