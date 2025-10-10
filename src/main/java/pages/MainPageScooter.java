@@ -2,11 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 
 public class MainPageScooter {
 
@@ -26,13 +22,6 @@ public class MainPageScooter {
 
     public void clickHeaderOrderButton() {
         driver.findElement(headerOrderButtonLocator).click();
-    }
-
-
-    public String getTextOfExpandedAnswer() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement expandedAnswer = wait.until(ExpectedConditions.visibilityOfElementLocated(expandedAnswerLocator));
-        return expandedAnswer.getText();
     }
 
 }

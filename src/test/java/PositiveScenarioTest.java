@@ -1,5 +1,7 @@
 import org.junit.After;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPageScooter;
@@ -50,8 +52,8 @@ public class PositiveScenarioTest extends BaseTest {
     @Parameterized.Parameters
     public static Object[][] getData() {
         return new Object[][]{
-                {"Екатерина", "Гордон", "ул. Пятницкое шоссе, д.42", "Фрунзенская", "89070520562", 10, "двое суток", "grey", "Оставить у двери"},
-                {"Мария", "Хворова", "ул. Парковая, д.10", "Академическая", "+79635665520", 5, "пятеро суток", "black", "Позвонить в домофон"},
+                {"Екатерина", "Гордон", "ул. Пятницкое шоссе, д.42", "Сокольники", "89070520562", 10, "двое суток", "grey", "Оставить у двери"},
+                {"Мария", "Хворова", "ул. Парковая, д.10", "Черкизовская", "+79635665520", 5, "пятеро суток", "black", "Позвонить в домофон"},
         };
     }
 
@@ -61,12 +63,26 @@ public class PositiveScenarioTest extends BaseTest {
         MainPageScooter mainPage = new MainPageScooter(driver);
         mainPage.open();
 
+        try {
+            WebElement cookieButton = driver.findElement(By.id("rcc-confirm-button"));
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(cookieButton));
+            cookieButton.click();
+        } catch (Exception e) {
+        }
+
+
         mainPage.clickHeaderOrderButton();
 
 
         OrderPageScooterSelenium orderPage = new OrderPageScooterSelenium(driver);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(15))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//input[@placeholder='* Имя']")));
+
+        Actions actions = new Actions(driver);
+        WebElement nameField = driver.findElement(By.xpath(".//input[@placeholder='* Имя']"));
+
+
+        actions.moveToElement(nameField).perform();
 
 
         orderPage.fillNameField(name)

@@ -3,14 +3,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class ScooterFAQTest extends BaseTest {
 
-    private WebDriver driver;
+
     private final String question;
     private final String answer;
 
@@ -36,10 +41,25 @@ public class ScooterFAQTest extends BaseTest {
 
     @Test
     public void testFAQDropdown() {
-        driver.findElement(By.xpath("//div[text()='" + question + "']")).click();
+        WebElement questionElement = driver.findElement(By.xpath("//div[text()='" + question + "']"));
 
 
-        String actualAnswer = driver.findElement(By.xpath("//div[text()='" + question + "']/following-sibling::div")).getText();
+        Actions actions = new Actions(driver);
+        actions.moveToElement(questionElement).perform();
+
+
+        questionElement.click();
+
+        WebElement answerElement = driver.findElement(By.xpath("//div[text()='" + question + "']/following-sibling::div"));
+
+
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOf(answerElement));
+
+
+        String actualAnswer = answerElement.getText();
+
+
         assertEquals("Текст ответа не совпадает", answer, actualAnswer);
     }
 
