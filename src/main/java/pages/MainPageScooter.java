@@ -10,7 +10,7 @@ public class MainPageScooter {
 
 
     private final By headerOrderButtonLocator = By.xpath(".//div[contains(@class,'Header_Nav')]/button[text()='Заказать']");
-    private final By expandedAnswerLocator = By.xpath(".//div[@class='accordion__panel' and not(@hidden)]");
+
 
     public MainPageScooter(WebDriver driver) {
         this.driver = driver;

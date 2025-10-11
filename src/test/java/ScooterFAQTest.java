@@ -1,10 +1,11 @@
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class ScooterFAQTest extends BaseTest {
-
 
     private final String question;
     private final String answer;
@@ -38,30 +38,43 @@ public class ScooterFAQTest extends BaseTest {
         };
     }
 
+    @Before
+    public void setUp() {
+        // проверяю и закрываю куки
+        try {
+            WebElement cookieButton = driver.findElement(By.id("rcc-confirm-button"));
+            if (cookieButton.isDisplayed()) {
+                cookieButton.click();
+            }
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+
+        }
+    }
+
 
     @Test
     public void testFAQDropdown() {
         WebElement questionElement = driver.findElement(By.xpath("//div[text()='" + question + "']"));
 
+        // для прокрутки элемента в видимую область
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", questionElement);
 
-        Actions actions = new Actions(driver);
-        actions.moveToElement(questionElement).perform();
-
+        // ожидаю кликабельность элемента
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(questionElement));
 
         questionElement.click();
 
-        WebElement answerElement = driver.findElement(By.xpath("//div[text()='" + question + "']/following-sibling::div"));
-
-
+        WebElement answerElement = driver.findElement(By.xpath("//div[text()='" + question + "']/parent::div/following-sibling::div[@class='accordion__panel']"));
+        //ожидаю видимость элемента ответа
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(answerElement));
 
-
         String actualAnswer = answerElement.getText();
-
 
         assertEquals("Текст ответа не совпадает", answer, actualAnswer);
     }
+
 
     @After
     public void teardown() {
